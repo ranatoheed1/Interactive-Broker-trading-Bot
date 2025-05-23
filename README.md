@@ -1,31 +1,59 @@
-# 📈 Stock Trading Strategy Analyzer
+# 📈 Bracket Order Backtesting Strategy
 
-This project implements a backtesting system that analyzes stock trading strategies using historical data from five major companies: AAPL, AMZN, GOOGL, MSFT, and TSLA. It utilizes a combination of technical indicators (200-period Moving Average and Ichimoku components) to generate buy signals and simulate trades with predefined stop-loss and take-profit thresholds.
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?logo=python)](https://www.python.org/)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-## 🔧 Features
+Backtest a time-shifted moving average strategy with bracket orders (entry, take-profit, stop-loss) on historical stock data using Python and pandas.
 
-- Backtests a simple buy strategy across 5 stocks.
-- Uses:
-  - 200-period Moving Average (`MA_200`)
-  - Ichimoku Kijun (Base Line)
-  - Lagging Span (Chikou Span)
-- Buy signal when current close > `MA_200` from 26 bars ago.
-- Executes trades with:
-  - 2% stop loss
-  - 4% take profit
-- Logs each trade (entry/exit price, duration, profit/loss).
-- Generates interactive candlestick charts with trade markers using Plotly.
-- Saves trade history to CSV.
+---
 
-## 📁 Dataset
+## 🗂️ Table of Contents
 
-CSV files used should contain the following columns:  
-`Timestamp`, `Open`, `High`, `Low`, `Close`
+- [Features](#-features)
+- [Strategy Overview](#-strategy-overview)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Configuration](#-configuration)
+- [Output](#-output)
+- [Example Trade Log](#-example-trade-log)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-Place them in your desired directory and update the paths accordingly:
-```python
-csv_files = [
-    "path/to/AAPL.csv",
-    "path/to/AMZN.csv",
-    ...
-]
+---
+
+## ✨ Features
+
+- Backtests bracket orders for multiple stocks.
+- Uses moving average with 26-bar lag for confirmation.
+- Simulates take-profit (10%) and stop-loss (12%) exits.
+- Position sizing based on a fixed budget or 1-share fallback.
+- Generates trade logs and terminal summary statistics.
+
+---
+
+## 🧠 Strategy Overview
+
+**Buy Signal**:
+
+- `Close price > 200-period MA (shifted back 26 bars)`
+- Enough cash available.
+
+**Bracket Order Logic**:
+
+- **Stop Loss**: 8% below entry price.
+- **Take Profit**: 6% above entry price.
+- Commission: $1 per trade.
+
+**End of Data Handling**:
+- Open positions are closed at the final candle's price.
+
+---
+
+## 🔧 Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/bracket-order-backtest.git
+cd bracket-order-backtest
